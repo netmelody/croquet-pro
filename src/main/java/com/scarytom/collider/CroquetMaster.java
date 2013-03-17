@@ -21,8 +21,10 @@ public final class CroquetMaster {
         final Game game = new Game();
 
         final StrokeEnactor enactor = new StrokeEnactor(game.pitch);
-        final Stroke stroke = Stroke.standard(Ball.BLUE, new Strike(0.1f, 0.1f));
-        final Transition transition = enactor.makeStroke(game.ballPositions, stroke);
+        final Stroke stroke1 = Stroke.standard(Ball.BLUE, new Strike(0.1f, 0.1f));
+        final Transition transition1 = enactor.makeStroke(game.ballPositions, stroke1);
+        final Stroke stroke2 = Stroke.standard(Ball.YELLOW, new Strike(0.1f, 0.1f));
+        final Transition transition2 = enactor.makeStroke(transition1.finalPositions(), stroke2);
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
@@ -44,7 +46,18 @@ public final class CroquetMaster {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        projector.project(transition);
+                        projector.project(transition1);
+                    }
+                });
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000L);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        projector.project(transition2);
                     }
                 });
                 

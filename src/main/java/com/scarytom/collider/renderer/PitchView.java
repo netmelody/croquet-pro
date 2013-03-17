@@ -30,9 +30,8 @@ public final class PitchView extends JPanel {
     private Graphics2D graphics2d = null;
     private Image dbImage = null;
 
-
     private static int scale(float value) {
-        return (int)(value * 60.0f);
+        return (int)(value * 140.0f);
     }
 
     public PitchView(Pitch pitch) {
@@ -57,8 +56,8 @@ public final class PitchView extends JPanel {
 
     private void drawPitch() {
         for (Hoop hoop : pitch.hoops) {
-            drawCircle(hoop.position.x - hoop.width / 2.0f, hoop.position.y, hoop.legRadius, Color.WHITE);
-            drawCircle(hoop.position.x + hoop.width / 2.0f, hoop.position.y, hoop.legRadius, Color.WHITE);
+            drawCircle(hoop.leg1Position.x, hoop.leg1Position.y, hoop.legRadius, Color.WHITE);
+            drawCircle(hoop.leg2Position.x, hoop.leg2Position.y, hoop.legRadius, Color.WHITE);
         }
         drawCircle(pitch.peg.position.x, pitch.peg.position.y, pitch.peg.radius, Color.WHITE);
     }

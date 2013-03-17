@@ -48,7 +48,7 @@ public final class StrokeEnactor {
         clearBalls();
         for (BallInPlay ballInPlay : balls) {
             if (stroke.ball.equals(ballInPlay.ball)) {
-                createBall(ballInPlay, -0.0f, 40f);
+                createBall(ballInPlay, 9f, -2.28f);
             }
             else {
                 createStillBall(ballInPlay);
@@ -89,9 +89,9 @@ public final class StrokeEnactor {
         
         final BodyDef bd = new BodyDef();
         bd.type = BodyType.STATIC;
-        bd.position.set(hoop.position.x - hoop.width / 2.0f, hoop.position.y);
+        bd.position.set(hoop.leg1Position.x, hoop.leg1Position.y);
         world.createBody(bd).createFixture(definition);
-        bd.position.set(hoop.position.x + hoop.width / 2.0f, hoop.position.y);
+        bd.position.set(hoop.leg2Position.x, hoop.leg2Position.y);
         world.createBody(bd).createFixture(definition);
     }
 
@@ -113,7 +113,7 @@ public final class StrokeEnactor {
             world.step(TIME_STEP, VELOCITY_ITERATIONS_PER_STEP, POSITION_ITERATIONS_PER_STEP);
             ballPositions.add(currentBallPositions());
         } while (!isFinished());
-        return new Transition(ballPositions);
+        return new Transition(TIME_STEP, ballPositions);
     }
 
     private List<BallInPlay> currentBallPositions() {

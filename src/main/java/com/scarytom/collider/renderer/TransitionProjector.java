@@ -21,7 +21,7 @@ public final class TransitionProjector {
         if (working != true) {
             new Thread(new Runnable(){
                 @Override public void run() {
-                    project(transition.footage());
+                    project(transition.timeStep, transition.footage());
                 }}, "animator").start();
         }
     }
@@ -30,13 +30,14 @@ public final class TransitionProjector {
         working = false;
     }
 
-    public void project(List<List<BallInPlay>> footage) {
+    public void project(float timeStep, List<List<BallInPlay>> footage) {
         long runStartTime = System.nanoTime();
         long frameStartTime = runStartTime;
 
         working = true;
         while (working) {
-            int frameNo = Long.valueOf((System.nanoTime() - runStartTime) / 10000000L).intValue();
+            long AVAILABLE_FRAMES_PER_NANOSECOND = (long)(1000000000.0 * timeStep);
+            int frameNo = Long.valueOf((System.nanoTime() - runStartTime) / AVAILABLE_FRAMES_PER_NANOSECOND).intValue();
             if (frameNo >= footage.size()) {
                 working = false;
                 return;
@@ -44,7 +45,7 @@ public final class TransitionProjector {
             
             view.draw(footage.get(frameNo));
             
-            long sleepTime = (1000000000 / DEFAULT_FPS - (System.nanoTime() - frameStartTime)) / 1000000;
+            long sleepTime = (1000000000L / DEFAULT_FPS - (System.nanoTime() - frameStartTime)) / 1000000L;
             if (sleepTime > 0) {
                 try {
                     Thread.sleep(sleepTime);
