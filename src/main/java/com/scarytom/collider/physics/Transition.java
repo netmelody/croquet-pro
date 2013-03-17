@@ -16,4 +16,7 @@ public final class Transition {
         return footage.get(footage.size());
     }
 
+    public List<List<BallInPlay>> footage() {
+        return footage;
+    }
 }

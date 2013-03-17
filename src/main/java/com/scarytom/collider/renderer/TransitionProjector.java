@@ -1,28 +1,28 @@
-package com.scarytom.collider;
+package com.scarytom.collider.renderer;
 
 import java.util.List;
 
-import com.scarytom.collider.Model.BallPosition;
+import com.scarytom.collider.model.BallInPlay;
+import com.scarytom.collider.physics.Transition;
 
-public final class Projector implements Runnable {
+public final class TransitionProjector {
 
     public static final int DEFAULT_FPS = 60;
 
-    private final Thread worker;
-    private final List<List<BallPosition>> simulation;
-    private final Artist artist;
+    private final PitchView view;
 
     private boolean working = false;
 
-    public Projector(List<List<BallPosition>> simulation, Artist artist) {
-        this.simulation = simulation;
-        this.artist = artist;
-        worker = new Thread(this, "animator");
+    public TransitionProjector(PitchView view) {
+        this.view = view;
     }
 
-    public synchronized void start() {
+    public synchronized void project(final Transition transition) {
         if (working != true) {
-            worker.start();
+            new Thread(new Runnable(){
+                @Override public void run() {
+                    project(transition.footage());
+                }}, "animator").start();
         }
     }
 
@@ -30,19 +30,19 @@ public final class Projector implements Runnable {
         working = false;
     }
 
-    public void run() {
+    public void project(List<List<BallInPlay>> footage) {
         long runStartTime = System.nanoTime();
         long frameStartTime = runStartTime;
 
         working = true;
         while (working) {
             int frameNo = Long.valueOf((System.nanoTime() - runStartTime) / 10000000L).intValue();
-            if (frameNo >= simulation.size()) {
+            if (frameNo >= footage.size()) {
                 working = false;
                 return;
             }
             
-            artist.draw(simulation.get(frameNo));
+            view.draw(footage.get(frameNo));
             
             long sleepTime = (1000000000 / DEFAULT_FPS - (System.nanoTime() - frameStartTime)) / 1000000;
             if (sleepTime > 0) {

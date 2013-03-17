@@ -70,7 +70,7 @@ public final class StrokeEnactor {
         clearBalls();
         for (BallInPlay ballInPlay : balls) {
             if (stroke.ball.equals(ballInPlay.ball)) {
-                createBall(ballInPlay.ball, ballInPlay.position.x, ballInPlay.position.y, -5.0f, -24.0f);
+                createBall(ballInPlay.ball, ballInPlay.position.x, ballInPlay.position.y, -0.0f, 25f);
             }
             else {
                 createStillBall(ballInPlay.ball, ballInPlay.position.x, ballInPlay.position.y);

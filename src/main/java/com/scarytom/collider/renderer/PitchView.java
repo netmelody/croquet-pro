@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.util.List;
 
@@ -12,9 +13,11 @@ import javax.swing.JPanel;
 
 import org.jbox2d.common.Vec2;
 
+import com.scarytom.collider.model.Ball;
 import com.scarytom.collider.model.BallInPlay;
 import com.scarytom.collider.model.Hoop;
 import com.scarytom.collider.model.Pitch;
+import com.scarytom.collider.model.Position;
 
 public final class PitchView extends JPanel {
 
@@ -40,12 +43,13 @@ public final class PitchView extends JPanel {
         setPreferredSize(new Dimension(panelWidth, panelHeight));
     }
 
-    public void draw(List<BallInPlay> balls) {
+    public void draw(List<BallInPlay> ballsInPlay) {
         if(prepare()) {
             drawPitch();
-            for (BallInPlay ballPosition : balls) {
-                graphics2d.setColor(Color.decode(ballPosition.ball.hexColor));
-                graphics2d.fillOval(scale(ballPosition.position.x), scale(ballPosition.position.y), scale(1.0f), scale(1.0f));
+            for (BallInPlay ballInPlay : ballsInPlay) {
+                final Ball ball = ballInPlay.ball;
+                final Position ballPosition = ballInPlay.position;
+                drawCircle(ballPosition.x, ballPosition.y, ball.radius, Color.decode(ball.hexColor));
             }
             unveil();
         }
@@ -53,28 +57,38 @@ public final class PitchView extends JPanel {
 
     private void drawPitch() {
         for (Hoop hoop : pitch.hoops) {
-            graphics2d.setColor(Color.WHITE);
-            graphics2d.fillOval(scale(hoop.position.x), scale(hoop.position.y - 1.1f), scale(0.05f), scale(0.05f));
-            graphics2d.fillOval(scale(hoop.position.x), scale(hoop.position.y + 1.1f), scale(0.05f), scale(0.05f));
+            drawCircle(hoop.position.x - hoop.width / 2.0f, hoop.position.y, hoop.legRadius, Color.WHITE);
+            drawCircle(hoop.position.x + hoop.width / 2.0f, hoop.position.y, hoop.legRadius, Color.WHITE);
         }
-        graphics2d.setColor(Color.WHITE);
-        graphics2d.fillOval(scale(pitch.peg.position.x), scale(pitch.peg.position.y), scale(0.1f), scale(0.1f));
+        drawCircle(pitch.peg.position.x, pitch.peg.position.y, pitch.peg.radius, Color.WHITE);
     }
 
+    private void drawCircle(float x, float y, float radius, Color color) {
+        int diameter = scale(radius * 2.0f);
+        graphics2d.setColor(color);
+        graphics2d.fillOval(scale(x), scale(y), diameter, diameter);
+    }
+    
     public Graphics2D getGraphics2d() {
         return graphics2d;
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (null != dbImage) {
+            g.drawImage(dbImage, 0, 0, null);
+        }
+    }
+
     public boolean prepare() {
         if (dbImage == null) {
-            if (panelWidth <= 0 || panelHeight <= 0) {
-                return false;
-            }
             dbImage = createImage(panelWidth, panelHeight);
             if (dbImage == null) {
                 return false;
             }
             graphics2d = (Graphics2D) dbImage.getGraphics();
+            graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
         graphics2d.setColor(Color.black);
         graphics2d.fillRect(0, 0, panelWidth, panelHeight);
