@@ -21,6 +21,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 import com.scarytom.collider.model.Ball;
 import com.scarytom.collider.model.BallInPlay;
 import com.scarytom.collider.model.Hoop;
+import com.scarytom.collider.model.Peg;
 import com.scarytom.collider.model.Pitch;
 import com.scarytom.collider.model.Stroke;
 
@@ -32,77 +33,78 @@ public final class StrokeEnactor {
 
     private static final float REST_VELOCITY_THRESHOLD = 0.01f;
 
-    private static final FixtureDef BALL_DEFINITON;
-    static {
-        final CircleShape shape = new CircleShape();
-        shape.m_radius = 1f;
-        BALL_DEFINITON = new FixtureDef();
-        BALL_DEFINITON.shape = shape;
-        BALL_DEFINITON.density = 1.0f;
-        BALL_DEFINITON.restitution = 0.66f;
-    }
-    private static final FixtureDef HOOP_DEFINITON;
-    static {
-        final CircleShape shape = new CircleShape();
-        shape.m_radius = 0.05f;
-        HOOP_DEFINITON = new FixtureDef();
-        HOOP_DEFINITON.shape = shape;
-    }
-    private static final FixtureDef PEG_DEFINITON;
-    static {
-        final CircleShape shape = new CircleShape();
-        shape.m_radius = 0.1f;
-        PEG_DEFINITON = new FixtureDef();
-        PEG_DEFINITON.shape = shape;
-    }
-
     private final World world = new World(new Vec2(0.0f, 0.0f), true);
 
     public StrokeEnactor(Pitch pitch) {
         world.setContactListener(new CustomContactListener());
         
         for (Hoop hoop : pitch.hoops) {
-            createHoop(hoop.position.x, hoop.position.y, 1.1f, 0.0f);
+            createHoop(hoop);
         }
+        createPeg(pitch.peg);
     }
 
     public Transition makeStroke(List<BallInPlay> balls, Stroke stroke) {
         clearBalls();
         for (BallInPlay ballInPlay : balls) {
             if (stroke.ball.equals(ballInPlay.ball)) {
-                createBall(ballInPlay.ball, ballInPlay.position.x, ballInPlay.position.y, -0.0f, 25f);
+                createBall(ballInPlay, -0.0f, 40f);
             }
             else {
-                createStillBall(ballInPlay.ball, ballInPlay.position.x, ballInPlay.position.y);
+                createStillBall(ballInPlay);
             }
         }
         return simulate();
     }
 
-    private void createStillBall(Ball colour, float x, float y) {
-        createBall(colour, x, y, 0.0f, 0.0f);
+    private void createStillBall(BallInPlay ballInPlay) {
+        createBall(ballInPlay, 0.0f, 0.0f);
     }
 
-    private void createBall(Ball colour, float x, float y, float vx, float vy) {
+    private void createBall(BallInPlay ballInPlay, float vx, float vy) {
+        final CircleShape shape = new CircleShape();
+        shape.m_radius = ballInPlay.ball.radius;
+        FixtureDef definition = new FixtureDef();
+        definition.shape = shape;
+        definition.density = 1.0f;
+        definition.restitution = 0.66f;
+        
         final BodyDef bd = new BodyDef();
         bd.type = BodyType.DYNAMIC;
-        bd.position.set(x, y);
+        bd.position.set(ballInPlay.position.x, ballInPlay.position.y);
         bd.linearDamping = 0.8f;
         bd.fixedRotation = true;
         bd.linearVelocity.set(vx, vy);
         
         final Body body = world.createBody(bd);
-        body.setUserData(colour);
-        body.createFixture(BALL_DEFINITON);
+        body.setUserData(ballInPlay.ball);
+        body.createFixture(definition);
     }
 
-    private void createHoop(float x, float y, float x1, float y1) {
+    private void createHoop(Hoop hoop) {
+        final CircleShape shape = new CircleShape();
+        shape.m_radius = hoop.legRadius;
+        FixtureDef definition = new FixtureDef();
+        definition.shape = shape;
+        
         final BodyDef bd = new BodyDef();
         bd.type = BodyType.STATIC;
-        bd.position.set(x - x1, y - y1);
-        world.createBody(bd).createFixture(HOOP_DEFINITON);
-        bd.position.set(x + x1, y + y1);
-        world.createBody(bd).createFixture(HOOP_DEFINITON);
+        bd.position.set(hoop.position.x - hoop.width / 2.0f, hoop.position.y);
+        world.createBody(bd).createFixture(definition);
+        bd.position.set(hoop.position.x + hoop.width / 2.0f, hoop.position.y);
+        world.createBody(bd).createFixture(definition);
+    }
+
+    private void createPeg(Peg peg) {
+        final CircleShape shape = new CircleShape();
+        shape.m_radius = peg.radius;
+        FixtureDef definition = new FixtureDef();
+        definition.shape = shape;
+        
+        final BodyDef bd = new BodyDef();
+        bd.type = BodyType.STATIC;
+        bd.position.set(peg.position.x, peg.position.y);
+        world.createBody(bd).createFixture(definition);
     }
 
     private Transition simulate() {

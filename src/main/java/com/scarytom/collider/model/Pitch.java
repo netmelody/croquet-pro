@@ -8,7 +8,8 @@ import java.util.List;
 
 public final class Pitch {
 
-    private static final float UNIT = 6.4008f;
+//    private static final float UNIT = 6.4008f;
+    private static final float UNIT = 3.4008f;
 
     public final float height = 5.0f * UNIT;
     public final float width  = 4.0f * UNIT;

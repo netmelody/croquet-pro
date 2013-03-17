@@ -32,7 +32,7 @@ public final class PitchView extends JPanel {
 
 
     private static int scale(float value) {
-        return (int)(value * 20.0f);
+        return (int)(value * 60.0f);
     }
 
     public PitchView(Pitch pitch) {
