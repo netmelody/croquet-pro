@@ -11,12 +11,12 @@ public final class Collider {
 
     public static void main(String[] args) {
         Model model = new Model();
-        List<List<BallPosition>> simulation = model.simulate();
+//        List<List<BallPosition>> simulation = model.simulate();
         
         ArtistCanvas canvas = new ArtistCanvas(600, 600);
         Artist artist = new Artist(canvas);
-        Projector studio = new Projector(simulation, artist);
-//        ArtistStudio studio = new ArtistStudio(model, artist);
+//        Projector studio = new Projector(simulation, artist);
+        ArtistStudio studio = new ArtistStudio(model, artist);
         
         JFrame frame = new JFrame("Testaroonie");
         frame.setLayout(new BorderLayout());
