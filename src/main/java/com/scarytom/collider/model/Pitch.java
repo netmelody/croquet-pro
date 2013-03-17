@@ -10,6 +10,9 @@ public final class Pitch {
 
     private static final float UNIT = 6.4008f;
 
+    public final float height = 5.0f * UNIT;
+    public final float width  = 4.0f * UNIT;
+    
     public final List<Hoop> hoops = unmodifiableList(asList(new Hoop(at(1.0f * UNIT, 1.0f * UNIT)),
                                                             new Hoop(at(1.0f * UNIT, 4.0f * UNIT)),
                                                             new Hoop(at(3.0f * UNIT, 4.0f * UNIT)),

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import com.scarytom.collider.Model.BallPosition;
+import com.scarytom.collider.model.Pitch;
+import com.scarytom.collider.renderer.PitchView;
 
 public final class Collider {
 
@@ -13,7 +15,7 @@ public final class Collider {
         Model model = new Model();
 //        List<List<BallPosition>> simulation = model.simulate();
         
-        ArtistCanvas canvas = new ArtistCanvas(600, 600);
+        PitchView canvas = new PitchView(new Pitch());
         Artist artist = new Artist(canvas);
 //        Projector studio = new Projector(simulation, artist);
         ArtistStudio studio = new ArtistStudio(model, artist);

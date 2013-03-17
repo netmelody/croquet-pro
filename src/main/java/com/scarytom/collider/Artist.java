@@ -14,13 +14,14 @@ import org.jbox2d.pooling.arrays.IntArray;
 import org.jbox2d.pooling.arrays.Vec2Array;
 
 import com.scarytom.collider.Model.BallPosition;
+import com.scarytom.collider.renderer.PitchView;
 
 public final class Artist extends DebugDraw {
     public static int POINTS_IN_CIRCLE = 20;
 
-    private final ArtistCanvas canvas;
+    private final PitchView canvas;
 
-    public Artist(ArtistCanvas canvas) {
+    public Artist(PitchView canvas) {
         super(new OBBViewportTransform());
         viewportTransform.setYFlip(true);
         this.canvas = canvas;
