@@ -1,3 +1,4 @@
+package com.scarytom.collider;
 import java.awt.AWTError;
 import java.awt.Color;
 import java.awt.Dimension;
