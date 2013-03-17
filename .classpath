@@ -6,5 +6,7 @@
 	<classpathentry kind="lib" path="vendor/buildlib/junit-dep-4.10.jar" sourcepath="vendor/src/junit-dep-4.10-sources.jar"/>
 	<classpathentry kind="lib" path="vendor/buildlib/hamcrest-core-1.3.0RC2.jar"/>
 	<classpathentry kind="lib" path="vendor/buildlib/hamcrest-library-1.3.0RC2.jar"/>
+	<classpathentry kind="lib" path="vendor/lib/jbox2d-library-2.1.2.3.jar" sourcepath="vendor/src/jbox2d-library-2.1.2.3-sources.jar"/>
+	<classpathentry kind="lib" path="vendor/lib/slf4j-api-1.7.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
