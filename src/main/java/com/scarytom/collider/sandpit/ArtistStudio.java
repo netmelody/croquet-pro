@@ -1,4 +1,4 @@
-package com.scarytom.collider;
+package com.scarytom.collider.sandpit;
 
 public final class ArtistStudio implements Runnable {
 

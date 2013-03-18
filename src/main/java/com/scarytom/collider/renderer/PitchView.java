@@ -1,4 +1,5 @@
 package com.scarytom.collider.renderer;
+
 import java.awt.AWTError;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,8 +11,6 @@ import java.awt.Toolkit;
 import java.util.List;
 
 import javax.swing.JPanel;
-
-import org.jbox2d.common.Vec2;
 
 import com.scarytom.collider.model.Ball;
 import com.scarytom.collider.model.BallInPlay;
@@ -67,10 +66,6 @@ public final class PitchView extends JPanel {
         graphics2d.setColor(color);
         graphics2d.fillOval(scale(x), scale(y), diameter, diameter);
     }
-    
-    public Graphics2D getGraphics2d() {
-        return graphics2d;
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -80,7 +75,7 @@ public final class PitchView extends JPanel {
         }
     }
 
-    public boolean prepare() {
+    private boolean prepare() {
         if (dbImage == null) {
             dbImage = createImage(panelWidth, panelHeight);
             if (dbImage == null) {
@@ -94,7 +89,7 @@ public final class PitchView extends JPanel {
         return true;
     }
 
-    public void unveil() {
+    private void unveil() {
         try {
             Graphics g = this.getGraphics();
             if ((g != null) && dbImage != null) {
@@ -106,7 +101,4 @@ public final class PitchView extends JPanel {
         }
     }
 
-    public Vec2 getCentre() {
-        return new Vec2(panelWidth / 2, panelHeight / 2);
-    }
 }

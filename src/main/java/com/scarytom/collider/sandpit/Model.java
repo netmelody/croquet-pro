@@ -1,4 +1,4 @@
-package com.scarytom.collider;
+package com.scarytom.collider.sandpit;
 
 import java.awt.Color;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.scarytom.collider;
+package com.scarytom.collider.sandpit;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
@@ -13,15 +13,14 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.pooling.arrays.IntArray;
 import org.jbox2d.pooling.arrays.Vec2Array;
 
-import com.scarytom.collider.Model.BallPosition;
-import com.scarytom.collider.renderer.PitchView;
+import com.scarytom.collider.sandpit.Model.BallPosition;
 
 public final class Artist extends DebugDraw {
     public static int POINTS_IN_CIRCLE = 20;
 
-    private final PitchView canvas;
+    private final Canvas canvas;
 
-    public Artist(PitchView canvas) {
+    public Artist(Canvas canvas) {
         super(new OBBViewportTransform());
         viewportTransform.setYFlip(true);
         this.canvas = canvas;
