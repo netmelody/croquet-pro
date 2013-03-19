@@ -1,10 +1,10 @@
 package com.scarytom.collider.model;
 
 public final class Strike {
-    public final double compassDirection;
-    public final double speed;
+    public final float compassDirection;
+    public final float speed;
 
-    public Strike(double compassDirectionRadians, double speed) {
+    public Strike(float compassDirectionRadians, float speed) {
         this.compassDirection = compassDirectionRadians;
         this.speed = speed;
     }

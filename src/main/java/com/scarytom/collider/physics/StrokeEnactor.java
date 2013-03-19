@@ -2,6 +2,8 @@ package com.scarytom.collider.physics;
 
 import static com.scarytom.collider.model.Position.at;
 import static java.lang.Math.abs;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +60,9 @@ public final class StrokeEnactor {
         clearBalls();
         for (BallInPlay ballInPlay : balls) {
             if (stroke.ball.equals(ballInPlay.ball)) {
-                createBall(ballInPlay, 70f, -17.5f);
+                createBall(ballInPlay,
+                           (float)sin(stroke.strike.compassDirection) * stroke.strike.speed,
+                           (float)cos(stroke.strike.compassDirection) * stroke.strike.speed);
             }
             else {
                 createStillBall(ballInPlay);

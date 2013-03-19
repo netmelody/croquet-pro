@@ -21,15 +21,13 @@ public final class CroquetMaster {
         final Game game = new Game();
 
         final StrokeEnactor enactor = new StrokeEnactor(game.pitch);
-        final Stroke stroke1 = Stroke.standard(Ball.BLUE, new Strike(0.1f, 0.1f));
+        final Stroke stroke1 = Stroke.standard(Ball.BLUE, new Strike(0.6f, 20.0f));
         final Transition transition1 = enactor.makeStroke(game.ballPositions, stroke1);
 //        final Stroke stroke2 = Stroke.standard(Ball.YELLOW, new Strike(0.1f, 0.1f));
 //        final Transition transition2 = enactor.makeStroke(transition1.finalPositions(), stroke2);
 
 //        Collider.debugWorld(new StrokeEnactor(game.pitch).debugStroke(game.ballPositions, stroke1));
 
-        Thread.sleep(4000L);
-        
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
                 final PitchView view = new PitchView(new Pitch());
