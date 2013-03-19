@@ -47,16 +47,6 @@ public final class CroquetMaster {
                             e.printStackTrace();
                         }
                         projector.project(transition1);
-                    }
-                });
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(3000L);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
                         projector.project(transition2);
                     }
                 });
