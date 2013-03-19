@@ -1,6 +1,7 @@
 package com.scarytom.collider.physics;
 
 import static com.scarytom.collider.model.Position.at;
+import static java.lang.Math.abs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import com.scarytom.collider.model.Stroke;
 
 public final class StrokeEnactor {
 
-    private static final float TIME_STEP = 0.01f;
+    private static final float TIME_STEP = 0.001f;
     private static final int VELOCITY_ITERATIONS_PER_STEP = 3;
     private static final int POSITION_ITERATIONS_PER_STEP = 8;
 
@@ -45,6 +46,16 @@ public final class StrokeEnactor {
     }
 
     public Transition makeStroke(List<BallInPlay> balls, Stroke stroke) {
+        setupStroke(balls, stroke);
+        return simulate();
+    }
+
+    public World debugStroke(List<BallInPlay> balls, Stroke stroke) {
+        setupStroke(balls, stroke);
+        return world;
+    }
+
+    private void setupStroke(List<BallInPlay> balls, Stroke stroke) {
         clearBalls();
         for (BallInPlay ballInPlay : balls) {
             if (stroke.ball.equals(ballInPlay.ball)) {
@@ -54,7 +65,6 @@ public final class StrokeEnactor {
                 createStillBall(ballInPlay);
             }
         }
-        return simulate();
     }
 
     private void createStillBall(BallInPlay ballInPlay) {
@@ -132,7 +142,8 @@ public final class StrokeEnactor {
     private boolean isFinished() {
         Body body = world.getBodyList();
         while (body != null) {
-            if (body.m_linearVelocity.x > REST_VELOCITY_THRESHOLD || body.m_linearVelocity.y > REST_VELOCITY_THRESHOLD) {
+            if (abs(body.m_linearVelocity.x) > REST_VELOCITY_THRESHOLD ||
+                abs(body.m_linearVelocity.y) > REST_VELOCITY_THRESHOLD) {
                 return false;
             }
             body = body.getNext();
