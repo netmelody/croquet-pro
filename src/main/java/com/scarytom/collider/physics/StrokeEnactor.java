@@ -28,7 +28,7 @@ import com.scarytom.collider.model.Stroke;
 
 public final class StrokeEnactor {
 
-    private static final float TIME_STEP = 0.001f;
+    private static final float TIME_STEP = 0.01f;
     private static final int VELOCITY_ITERATIONS_PER_STEP = 3;
     private static final int POSITION_ITERATIONS_PER_STEP = 8;
 
@@ -38,7 +38,6 @@ public final class StrokeEnactor {
 
     public StrokeEnactor(Pitch pitch) {
         world.setContactListener(new CustomContactListener());
-        
         for (Hoop hoop : pitch.hoops) {
             createHoop(hoop);
         }
@@ -59,7 +58,7 @@ public final class StrokeEnactor {
         clearBalls();
         for (BallInPlay ballInPlay : balls) {
             if (stroke.ball.equals(ballInPlay.ball)) {
-                createBall(ballInPlay, 70f, -17.607f);
+                createBall(ballInPlay, 70f, -17.5f);
             }
             else {
                 createStillBall(ballInPlay);

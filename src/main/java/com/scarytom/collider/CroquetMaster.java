@@ -14,7 +14,6 @@ import com.scarytom.collider.physics.StrokeEnactor;
 import com.scarytom.collider.physics.Transition;
 import com.scarytom.collider.renderer.PitchView;
 import com.scarytom.collider.renderer.TransitionProjector;
-import com.scarytom.collider.sandpit.Collider;
 
 public final class CroquetMaster {
 
@@ -27,7 +26,7 @@ public final class CroquetMaster {
 //        final Stroke stroke2 = Stroke.standard(Ball.YELLOW, new Strike(0.1f, 0.1f));
 //        final Transition transition2 = enactor.makeStroke(transition1.finalPositions(), stroke2);
 
-        Collider.debugWorld(new StrokeEnactor(game.pitch).debugStroke(game.ballPositions, stroke1));
+//        Collider.debugWorld(new StrokeEnactor(game.pitch).debugStroke(game.ballPositions, stroke1));
 
         Thread.sleep(4000L);
         
