@@ -3,6 +3,11 @@ package com.scarytom.collider;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 import com.scarytom.collider.model.Ball;
@@ -21,12 +26,6 @@ public final class CroquetMaster {
         final Game game = new Game();
 
         final StrokeEnactor enactor = new StrokeEnactor(game.pitch);
-        final Stroke stroke1 = Stroke.standard(Ball.BLUE, new Strike(0.6f, 20.0f));
-        final Transition transition1 = enactor.makeStroke(game.ballPositions, stroke1);
-//        final Stroke stroke2 = Stroke.standard(Ball.YELLOW, new Strike(0.1f, 0.1f));
-//        final Transition transition2 = enactor.makeStroke(transition1.finalPositions(), stroke2);
-
-//        Collider.debugWorld(new StrokeEnactor(game.pitch).debugStroke(game.ballPositions, stroke1));
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
@@ -39,25 +38,51 @@ public final class CroquetMaster {
                 frame.pack();
                 
                 view.draw(game.ballPositions);
-                
+
                 SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(400L);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                    @Override public void run() {
+                        Stroke s = showOptionPane();
+                        if (null != s) {
+                            final Transition t = enactor.makeStroke(game.ballPositions, s);
+                            projector.project(t);
                         }
-                        projector.project(transition1);
-//                        projector.project(transition2);
                     }
                 });
-                
+
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
             }
+
         });
+    }
+    
+    private static Stroke showOptionPane() {
+        Object[] possibilities = {Ball.BLUE, Ball.BLACK, Ball.YELLOW, Ball.RED}; 
+        JSpinner angleSpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 360.0, 1.0));
+        JSpinner powerSpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 20.0, 1.0));
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("angle:"));
+        panel.add(angleSpinner);
+        panel.add(new JLabel("power:"));
+        panel.add(powerSpinner);
+        panel.add(new JLabel("ball:"));
+        Ball b = (Ball)JOptionPane.showInputDialog(
+                            null,
+                            panel,
+                            "Customized Dialog",
+                            JOptionPane.PLAIN_MESSAGE,
+                            null,
+                            possibilities,
+                            Ball.BLUE);
+
+        //If a string was returned, say so.
+        if (b != null) {
+            Double power = (Double)powerSpinner.getValue();
+            final float angle = (float)Math.toRadians((double)angleSpinner.getValue());
+            return Stroke.standard(b, new Strike(angle, power.floatValue()));
+        }
+        return null;
     }
 }
 
