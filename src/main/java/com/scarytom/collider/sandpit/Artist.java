@@ -1,7 +1,6 @@
 package com.scarytom.collider.sandpit;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.List;
 
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.common.Color3f;
@@ -12,8 +11,6 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.pooling.arrays.IntArray;
 import org.jbox2d.pooling.arrays.Vec2Array;
-
-import com.scarytom.collider.sandpit.Model.BallPosition;
 
 public final class Artist extends DebugDraw {
     public static int POINTS_IN_CIRCLE = 20;
@@ -29,20 +26,10 @@ public final class Artist extends DebugDraw {
         viewportTransform.setExtents(canvas.getCentre());
     }
 
-    public void draw(Model model) {
+    public void draw(World world) {
         if(canvas.prepare()){
-            World pose = model.pose();
-            pose.setDebugDraw(this);
-            pose.drawDebugData();
-            canvas.unveil();
-        }
-    }
-
-    public void draw(List<BallPosition> list) {
-        if(canvas.prepare()) {
-            for (BallPosition ballPosition : list) {
-                drawSolidCircle(new Vec2(ballPosition.x, ballPosition.y), 1.0f, null, null);
-            }
+            world.setDebugDraw(this);
+            world.drawDebugData();
             canvas.unveil();
         }
     }

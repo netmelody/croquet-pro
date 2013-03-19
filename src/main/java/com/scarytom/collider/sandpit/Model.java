@@ -1,8 +1,6 @@
 package com.scarytom.collider.sandpit;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -18,12 +16,6 @@ import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 
 public final class Model {
-
-    private static final float TIME_STEP = 0.01f;
-    private static final int VELOCITY_ITERATIONS_PER_STEP = 3;
-    private static final int POSITION_ITERATIONS_PER_STEP = 8;
-
-    private static final float REST_VELOCITY_THRESHOLD = 0.01f;
 
     private final World world = new World(new Vec2(0.0f, 0.0f), true);
 
@@ -79,54 +71,6 @@ public final class Model {
         world.createBody(bd).createFixture(fd);
     }
 
-    public synchronized void step() {
-        world.step(TIME_STEP, VELOCITY_ITERATIONS_PER_STEP, POSITION_ITERATIONS_PER_STEP);
-    }
-
-    public static final class BallPosition {
-        public final Color colour;
-        public final float x;
-        public final float y;
-        public BallPosition(Color colour, float x, float y) {
-            this.colour = colour;
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public List<List<BallPosition>> simulate() {
-        List<List<BallPosition>> positions = new ArrayList<List<BallPosition>>();
-        do {
-            world.step(TIME_STEP, VELOCITY_ITERATIONS_PER_STEP, POSITION_ITERATIONS_PER_STEP);
-            positions.add(positions());
-        } while (!finished());
-        return positions;
-    }
-
-    private List<BallPosition> positions() {
-        final List<BallPosition> result = new ArrayList<BallPosition>();
-        
-        Body body = world.getBodyList();
-        while (body != null) {
-            if (body.getUserData() instanceof Color) {
-                result.add(new BallPosition((Color)body.getUserData(), body.getWorldCenter().x,  body.getWorldCenter().y));
-            }
-            body = body.getNext();
-        }
-        return result;
-    }
-
-    public boolean finished() {
-        Body body = world.getBodyList();
-        while (body != null) {
-            if (body.m_linearVelocity.x > REST_VELOCITY_THRESHOLD || body.m_linearVelocity.y > REST_VELOCITY_THRESHOLD) {
-                return false;
-            }
-            body = body.getNext();
-        }
-        return true;
-    }
-    
     public World pose() {
         return world;
     }
