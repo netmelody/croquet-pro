@@ -132,7 +132,7 @@ public final class StrokeEnactor {
         Body body = world.getBodyList();
         while (body != null) {
             if (body.getUserData() instanceof Ball) {
-                result.add(new BallInPlay((Ball)body.getUserData(), at(body.getWorldCenter().x,  body.getWorldCenter().y)));
+                result.add(new BallInPlay((Ball)body.getUserData(), at(body.getWorldCenter().x, body.getWorldCenter().y)));
             }
             body = body.getNext();
         }
