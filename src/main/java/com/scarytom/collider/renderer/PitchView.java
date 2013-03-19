@@ -64,7 +64,7 @@ public final class PitchView extends JPanel {
     private void drawCircle(float x, float y, float radius, Color color) {
         int diameter = scale(radius * 2.0f);
         graphics2d.setColor(color);
-        graphics2d.fillOval(scale(x), scale(y), diameter, diameter);
+        graphics2d.fillOval(scale(x - radius), scale(y - radius), diameter, diameter);
     }
 
     @Override
