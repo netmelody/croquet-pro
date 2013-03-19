@@ -14,18 +14,23 @@ import com.scarytom.collider.physics.StrokeEnactor;
 import com.scarytom.collider.physics.Transition;
 import com.scarytom.collider.renderer.PitchView;
 import com.scarytom.collider.renderer.TransitionProjector;
+import com.scarytom.collider.sandpit.Collider;
 
 public final class CroquetMaster {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         final Game game = new Game();
 
         final StrokeEnactor enactor = new StrokeEnactor(game.pitch);
         final Stroke stroke1 = Stroke.standard(Ball.BLUE, new Strike(0.1f, 0.1f));
         final Transition transition1 = enactor.makeStroke(game.ballPositions, stroke1);
-        final Stroke stroke2 = Stroke.standard(Ball.YELLOW, new Strike(0.1f, 0.1f));
-        final Transition transition2 = enactor.makeStroke(transition1.finalPositions(), stroke2);
+//        final Stroke stroke2 = Stroke.standard(Ball.YELLOW, new Strike(0.1f, 0.1f));
+//        final Transition transition2 = enactor.makeStroke(transition1.finalPositions(), stroke2);
 
+        Collider.debugWorld(new StrokeEnactor(game.pitch).debugStroke(game.ballPositions, stroke1));
+
+        Thread.sleep(4000L);
+        
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
                 final PitchView view = new PitchView(new Pitch());
@@ -47,7 +52,7 @@ public final class CroquetMaster {
                             e.printStackTrace();
                         }
                         projector.project(transition1);
-                        projector.project(transition2);
+//                        projector.project(transition2);
                     }
                 });
                 

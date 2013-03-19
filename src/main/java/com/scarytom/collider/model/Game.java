@@ -12,9 +12,9 @@ public final class Game {
     public final Pitch pitch = new Pitch();
 
     public final List<BallInPlay> ballPositions = unmodifiableList(asList(
-            new BallInPlay(Ball.BLACK,  at(1.0f, 3.00f)),
-            new BallInPlay(Ball.YELLOW, at(1.0f, 3.25f)),
-            new BallInPlay(Ball.RED,    at(1.0f, 3.50f)),
-            new BallInPlay(Ball.BLUE  , at(1.0f, 3.75f))));
+            new BallInPlay(Ball.BLACK,  at(10.0f, 30.0f)),
+            new BallInPlay(Ball.YELLOW, at(10.0f, 32.5f)),
+            new BallInPlay(Ball.RED,    at(10.0f, 35.0f)),
+            new BallInPlay(Ball.BLUE  , at(10.0f, 37.5f))));
 
 }

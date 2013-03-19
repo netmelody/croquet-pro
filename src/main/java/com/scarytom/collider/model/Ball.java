@@ -13,7 +13,7 @@ public final class Ball {
     public static final Ball PINK   = Ball.coloured("#FFDCD7");
 
     public final String hexColor;
-    public final float radius = 0.0460375f;
+    public final float radius = 0.460375f;
 
     private Ball(String hexColor) {
         this.hexColor = hexColor;

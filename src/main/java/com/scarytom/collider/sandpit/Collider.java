@@ -14,7 +14,7 @@ public final class Collider {
     }
 
     public static void debugWorld(World world) {
-        Canvas canvas = new Canvas(600, 600);
+        Canvas canvas = new Canvas(2400, 1200);
         Artist artist = new Artist(canvas);
         ArtistStudio studio = new ArtistStudio(world, artist);
         
