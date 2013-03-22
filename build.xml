@@ -25,7 +25,7 @@
                 <manifest>
                     <attribute name="Main-Class" value="@{mainclass}"/>
                     <attribute name="Implementation-Title" value="${ant.project.name}"/>
-                    <attribute name="Implementation-Vendor" value="my-domain-name"/>
+                    <attribute name="Implementation-Vendor" value="netmelody.org"/>
                     <attribute name="Implementation-Version" value="@{moduleversion}"/>
                     <attribute name="Built-By" value="${user.name}"/>
                     <attribute name="Built-Date" value="${build.timestamp}"/>
@@ -78,7 +78,7 @@
     </target>
 
     <target name="jar" description="Create Jar files" depends="clean,-version,-pack-deps">
-        <jar-module modulename="main" moduleversion="${version.label}" depsjar="${build.dir}/main-compiledeps.jar" mainclass="my-main-class"/>
+        <jar-module modulename="main" moduleversion="${version.label}" depsjar="${build.dir}/main-compiledeps.jar" mainclass="org.netmelody.croquet.CroquetPro"/>
         <jar-module modulename="test" moduleversion="${version.label}" depsjar="${build.dir}/test-compiledeps.jar"/>
     </target>
 
