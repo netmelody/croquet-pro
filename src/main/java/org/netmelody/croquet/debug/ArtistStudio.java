@@ -1,4 +1,4 @@
-package com.scarytom.collider.sandpit;
+package org.netmelody.croquet.debug;
 
 import org.jbox2d.dynamics.World;
 

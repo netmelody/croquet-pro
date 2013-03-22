@@ -1,4 +1,4 @@
-package com.scarytom.collider;
+package org.netmelody.croquet;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -15,16 +15,16 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
-import com.scarytom.collider.model.Ball;
-import com.scarytom.collider.model.BallInPlay;
-import com.scarytom.collider.model.Game;
-import com.scarytom.collider.model.Pitch;
-import com.scarytom.collider.model.Strike;
-import com.scarytom.collider.model.Stroke;
-import com.scarytom.collider.physics.StrokeEnactor;
-import com.scarytom.collider.physics.Transition;
-import com.scarytom.collider.renderer.PitchView;
-import com.scarytom.collider.renderer.TransitionProjector;
+import org.netmelody.croquet.model.Ball;
+import org.netmelody.croquet.model.BallInPlay;
+import org.netmelody.croquet.model.Game;
+import org.netmelody.croquet.model.Pitch;
+import org.netmelody.croquet.model.Strike;
+import org.netmelody.croquet.model.Stroke;
+import org.netmelody.croquet.physics.StrokeEnactor;
+import org.netmelody.croquet.physics.Transition;
+import org.netmelody.croquet.renderer.PitchView;
+import org.netmelody.croquet.renderer.TransitionProjector;
 
 public final class CroquetMaster {
 

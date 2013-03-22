@@ -1,6 +1,6 @@
-package com.scarytom.collider.physics;
+package org.netmelody.croquet.physics;
 
-import static com.scarytom.collider.model.Position.at;
+import static org.netmelody.croquet.model.Position.at;
 import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -21,12 +21,12 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 
-import com.scarytom.collider.model.Ball;
-import com.scarytom.collider.model.BallInPlay;
-import com.scarytom.collider.model.Hoop;
-import com.scarytom.collider.model.Peg;
-import com.scarytom.collider.model.Pitch;
-import com.scarytom.collider.model.Stroke;
+import org.netmelody.croquet.model.Ball;
+import org.netmelody.croquet.model.BallInPlay;
+import org.netmelody.croquet.model.Hoop;
+import org.netmelody.croquet.model.Peg;
+import org.netmelody.croquet.model.Pitch;
+import org.netmelody.croquet.model.Stroke;
 
 public final class StrokeEnactor {
 

@@ -1,6 +1,6 @@
-package com.scarytom.collider.model;
+package org.netmelody.croquet.model;
 
-import static com.scarytom.collider.model.Position.at;
+import static org.netmelody.croquet.model.Position.at;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 

@@ -1,8 +1,8 @@
-package com.scarytom.collider.physics;
+package org.netmelody.croquet.physics;
 
 import java.util.List;
 
-import com.scarytom.collider.model.BallInPlay;
+import org.netmelody.croquet.model.BallInPlay;
 
 public final class Transition {
 

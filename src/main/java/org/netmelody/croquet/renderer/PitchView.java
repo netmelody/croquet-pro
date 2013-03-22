@@ -1,4 +1,4 @@
-package com.scarytom.collider.renderer;
+package org.netmelody.croquet.renderer;
 
 import java.awt.AWTError;
 import java.awt.Color;
@@ -12,11 +12,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import com.scarytom.collider.model.Ball;
-import com.scarytom.collider.model.BallInPlay;
-import com.scarytom.collider.model.Hoop;
-import com.scarytom.collider.model.Pitch;
-import com.scarytom.collider.model.Position;
+import org.netmelody.croquet.model.Ball;
+import org.netmelody.croquet.model.BallInPlay;
+import org.netmelody.croquet.model.Hoop;
+import org.netmelody.croquet.model.Pitch;
+import org.netmelody.croquet.model.Position;
 
 public final class PitchView extends JPanel {
 

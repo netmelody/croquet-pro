@@ -1,9 +1,9 @@
-package com.scarytom.collider.renderer;
+package org.netmelody.croquet.renderer;
 
 import java.util.List;
 
-import com.scarytom.collider.model.BallInPlay;
-import com.scarytom.collider.physics.Transition;
+import org.netmelody.croquet.model.BallInPlay;
+import org.netmelody.croquet.physics.Transition;
 
 public final class TransitionProjector {
 

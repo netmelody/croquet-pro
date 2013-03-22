@@ -1,4 +1,4 @@
-package com.scarytom.collider.model;
+package org.netmelody.croquet.model;
 
 public final class Hoop {
 
