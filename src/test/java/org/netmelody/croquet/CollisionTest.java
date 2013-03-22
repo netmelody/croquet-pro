@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.Test;
 
-public final class ColliderTest {
+public final class CollisionTest {
 
     private static final int X  = 0;
     private static final int Y  = 1;

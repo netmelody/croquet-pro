@@ -26,7 +26,7 @@ import org.netmelody.croquet.physics.Transition;
 import org.netmelody.croquet.renderer.PitchView;
 import org.netmelody.croquet.renderer.TransitionProjector;
 
-public final class CroquetMaster {
+public final class CroquetPro {
 
     private final Game game = new Game();
     private final StrokeEnactor enactor = new StrokeEnactor(game.pitch);
@@ -34,7 +34,7 @@ public final class CroquetMaster {
 
     private List<BallInPlay> ballPositions = game.ballPositions;
 
-    public CroquetMaster() {
+    public CroquetPro() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override public void run() {
                 final PitchView view = new PitchView(new Pitch());
@@ -53,7 +53,7 @@ public final class CroquetMaster {
     }
     
     public static void main(String[] args) throws Exception {
-        new CroquetMaster();
+        new CroquetPro();
     }
     
     private void showControlsFrame() {

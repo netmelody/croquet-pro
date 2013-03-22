@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import org.jbox2d.dynamics.World;
 
-public final class Collider {
+public final class CroquetDebugger {
 
     public static void main(String[] args) {
         World world = new Model().pose();
