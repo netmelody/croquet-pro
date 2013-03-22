@@ -84,7 +84,7 @@ public final class PitchView extends JPanel {
             graphics2d = (Graphics2D) dbImage.getGraphics();
             graphics2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
-        graphics2d.setColor(Color.black);
+        graphics2d.setColor(Color.decode("#084008"));
         graphics2d.fillRect(0, 0, panelWidth, panelHeight);
         return true;
     }
