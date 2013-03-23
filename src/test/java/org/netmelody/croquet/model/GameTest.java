@@ -21,7 +21,7 @@ public final class GameTest {
 
     @Test public void
     teamTwoGetsATurnNext() {
-        Game game2 = game.applyStroke(Ball.BLACK, new ArrayList<StrokeEvent>(), game.ballPositions);
+        Game game2 = game.applyStroke(Ball.BLACK, new ArrayList<StrokeEvent<?>>(), game.ballPositions);
         assertThat(game2.currentTeam(), sameInstance(team2));
     }
 }

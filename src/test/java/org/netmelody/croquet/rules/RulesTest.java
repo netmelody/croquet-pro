@@ -20,7 +20,7 @@ public final class RulesTest {
 
     @Test public void
     eventlessStrokeFinishesTurn() {
-        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, new ArrayList<StrokeEvent>());
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, new ArrayList<StrokeEvent<?>>());
 
         assertThat(updatedTurn.finished(), is(true));
     }

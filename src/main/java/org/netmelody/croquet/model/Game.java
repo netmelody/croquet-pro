@@ -50,7 +50,7 @@ public final class Game {
         return currentTurn.team;
     }
 
-    public Game applyStroke(Ball ball, List<StrokeEvent> events, List<BallInPlay> newPositions) {
+    public Game applyStroke(Ball ball, List<StrokeEvent<?>> events, List<BallInPlay> newPositions) {
         return new Game(pitch, rules, teams, newPositions, rules.adjudicateStroke(currentTurn, ball, events));
     }
 }
