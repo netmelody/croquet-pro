@@ -22,7 +22,7 @@ public final class Game {
              new Rules(),
              unmodifiableList(asList(team1, team2)));
     }
-    
+
     private Game(Pitch pitch, Rules rules, List<Team> teams) {
         this(pitch, rules, teams,
              unmodifiableList(asList(new BallInPlay(Ball.BLACK,  at(pitch.yardLineInset, 20.0f)),
@@ -55,6 +55,7 @@ public final class Game {
     }
 
     public Game applyStroke(Ball ball, List<StrokeEvent<?>> events, List<BallInPlay> newPositions) {
-        return new Game(pitch, rules, teams, newPositions, rules.adjudicateStroke(currentTurn, ball, events));
+        final Turn progressedTurn = rules.adjudicateStroke(currentTurn, ball, pitch.hoops.get(0), events);
+        return new Game(pitch, rules, teams, newPositions, progressedTurn);
     }
 }

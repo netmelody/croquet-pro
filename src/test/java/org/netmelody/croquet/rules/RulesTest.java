@@ -25,26 +25,37 @@ public final class RulesTest {
 
     @Test public void
     eventlessStrokeFinishesTurn() {
-        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, events());
+        final Hoop hoop = new Hoop(Position.at(1, 2));
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, hoop, events());
 
         assertThat(updatedTurn.finished(), is(true));
     }
 
     @Test public void
-    runningAHoopWithThePlayedBallGarnersAnExtraStoke() {
+    runningTargetHoopWithThePlayedBallGarnersAnExtraStroke() {
         final Hoop hoop = new Hoop(Position.at(1, 2));
-        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, events(runHoop(Ball.BLACK, hoop)));
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, hoop, events(runHoop(Ball.BLACK, hoop)));
         
         assertThat(updatedTurn.finished(), is(false));
     }
 
     @Test public void
-    runningAHoopWithABallOtherThanThatPlayedGarnersNoExtraStoke() {
+    runningTargetHoopWithABallOtherThanThatPlayedGarnersNoExtraStroke() {
         final Hoop hoop = new Hoop(Position.at(1, 2));
-        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, events(runHoop(Ball.BLUE, hoop)));
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, hoop, events(runHoop(Ball.BLUE, hoop)));
         
         assertThat(updatedTurn.finished(), is(true));
     }
+
+    @Test public void
+    runningNonTargetHoopWithThePlayedBallGarnersAnExtraStroke() {
+        final Hoop target = new Hoop(Position.at(1, 2));
+        final Hoop other = new Hoop(Position.at(1, 2));
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, target, events(runHoop(Ball.BLACK, other)));
+        
+        assertThat(updatedTurn.finished(), is(true));
+    }
+
 
     private static List<StrokeEvent<?>> events(StrokeEvent<?>... events) {
         return new ArrayList<StrokeEvent<?>>(Arrays.asList(events));
