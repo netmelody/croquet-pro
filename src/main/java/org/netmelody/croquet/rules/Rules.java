@@ -1,5 +1,8 @@
 package org.netmelody.croquet.rules;
 
+import static org.netmelody.croquet.model.StrokeEventType.COLLISION;
+import static org.netmelody.croquet.model.StrokeEventType.RUN_HOOP;
+
 import java.util.List;
 
 import org.netmelody.croquet.model.Ball;
@@ -12,8 +15,12 @@ public final class Rules {
 
     public Turn adjudicateStroke(Turn currentTurn, Ball ball, Hoop nextHoop, List<StrokeEvent<?>> events) {
         for (StrokeEvent<?> event : events) {
-            if (event.type == StrokeEventType.RUN_HOOP && ball == event.ball && nextHoop == event.counterparty) {
+            if (event.type == RUN_HOOP && ball == event.ball && nextHoop == event.counterparty) {
                 return currentTurn;
+            }
+            
+            if (event.type == COLLISION) {
+                return currentTurn.roquet(event.ball);
             }
         }
         
