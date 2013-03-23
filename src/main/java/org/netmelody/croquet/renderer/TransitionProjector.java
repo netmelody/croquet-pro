@@ -7,21 +7,27 @@ import org.netmelody.croquet.physics.Transition;
 
 public final class TransitionProjector {
 
-    public static final int DEFAULT_FPS = 60;
-    private static final long NANOS_PER_FRAME = 1000000000L / DEFAULT_FPS;
+    private static final short DEFAULT_FPS = 60;
+    private static final long NANOS_PER_SECOND = 1000000000L;
 
     private final PitchView view;
+    private final long nanosPerFrame;
 
     public TransitionProjector(PitchView view) {
+        this(view, DEFAULT_FPS);
+    }
+
+    public TransitionProjector(PitchView view, short framesPerSecond) {
         this.view = view;
+        this.nanosPerFrame = NANOS_PER_SECOND / framesPerSecond;
     }
 
     public void project(final Transition transition) {
         project(transition.timeStep, transition.footage());
     }
 
-    public void project(float timeStep, List<List<BallInPlay>> footage) {
-        final long cellsPerNano = (long)(1000000000.0 * timeStep);
+    private void project(float timeStep, List<List<BallInPlay>> footage) {
+        final long cellsPerNano = (long)(NANOS_PER_SECOND * timeStep);
         final long runStartTime = System.nanoTime();
         
         long frameStartTime = runStartTime;
@@ -30,7 +36,7 @@ public final class TransitionProjector {
         do {
             view.draw(footage.get(frameNo));
             
-            long sleepTimeMillis = (NANOS_PER_FRAME - (System.nanoTime() - frameStartTime)) / 1000000L;
+            long sleepTimeMillis = (nanosPerFrame - (System.nanoTime() - frameStartTime)) / 1000000L;
             if (sleepTimeMillis > 0) {
                 try {
                     Thread.sleep(sleepTimeMillis);
