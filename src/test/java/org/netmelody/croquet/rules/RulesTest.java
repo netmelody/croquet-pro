@@ -29,21 +29,21 @@ public final class RulesTest {
     eventlessStrokeFinishesTurn() {
         final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events());
 
-        assertThat(updatedTurn.finished(), is(true));
+        assertThat(updatedTurn.finished, is(true));
     }
 
     @Test public void
     runningTargetHoopWithThePlayedBallGarnersAnExtraStroke() {
         final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(runHoop(Ball.BLACK, targetHoop)));
         
-        assertThat(updatedTurn.finished(), is(false));
+        assertThat(updatedTurn.finished, is(false));
     }
 
     @Test public void
     runningTargetHoopWithABallOtherThanThatPlayedGarnersNoExtraStroke() {
         final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(runHoop(Ball.BLUE, targetHoop)));
         
-        assertThat(updatedTurn.finished(), is(true));
+        assertThat(updatedTurn.finished, is(true));
     }
 
     @Test public void
@@ -51,7 +51,7 @@ public final class RulesTest {
         final Hoop other = new Hoop(Position.at(1, 2));
         final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(runHoop(Ball.BLACK, other)));
         
-        assertThat(updatedTurn.finished(), is(true));
+        assertThat(updatedTurn.finished, is(true));
     }
 
     @Test public void
@@ -59,7 +59,7 @@ public final class RulesTest {
         final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLUE, Ball.BLACK)));
         
         assertThat(updatedTurn.roquetBall, is(Ball.BLUE));
-        assertThat(updatedTurn.finished(), is(false));
+        assertThat(updatedTurn.finished, is(false));
     }
 
     private static List<StrokeEvent<?>> events(StrokeEvent<?>... events) {

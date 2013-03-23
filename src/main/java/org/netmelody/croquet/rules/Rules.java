@@ -8,7 +8,6 @@ import java.util.List;
 import org.netmelody.croquet.model.Ball;
 import org.netmelody.croquet.model.Hoop;
 import org.netmelody.croquet.model.StrokeEvent;
-import org.netmelody.croquet.model.StrokeEventType;
 import org.netmelody.croquet.model.Turn;
 
 public final class Rules {

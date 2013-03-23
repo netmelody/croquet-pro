@@ -38,7 +38,7 @@ public final class Game {
         this.teams = teams;
         this.ballPositions = newPositions;
         
-        if (turn.finished()) {
+        if (turn.finished) {
             currentTurn = new Turn(teamAfter(teams, turn.team));
         }
         else {
