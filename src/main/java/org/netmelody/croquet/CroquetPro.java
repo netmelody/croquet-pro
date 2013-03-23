@@ -21,6 +21,7 @@ import org.netmelody.croquet.model.Game;
 import org.netmelody.croquet.model.Pitch;
 import org.netmelody.croquet.model.Strike;
 import org.netmelody.croquet.model.Stroke;
+import org.netmelody.croquet.model.Team;
 import org.netmelody.croquet.physics.StrokeEnactor;
 import org.netmelody.croquet.physics.Transition;
 import org.netmelody.croquet.renderer.PitchView;
@@ -28,7 +29,7 @@ import org.netmelody.croquet.renderer.TransitionProjector;
 
 public final class CroquetPro {
 
-    private final Game game = new Game();
+    private final Game game = new Game(new Team("Team 1"), new Team("Team2"));
     private final StrokeEnactor enactor = new StrokeEnactor(game.pitch);
     private final List<TransitionProjector> projectors = new ArrayList<TransitionProjector>();
 
