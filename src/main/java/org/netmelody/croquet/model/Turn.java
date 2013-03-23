@@ -23,4 +23,8 @@ public final class Turn {
     public Turn roquet(Ball ball) {
         return new Turn(team, false, ball);
     }
+
+    public Turn continuation() {
+        return this;
+    }
 }

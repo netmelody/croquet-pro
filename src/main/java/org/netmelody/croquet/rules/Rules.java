@@ -15,11 +15,11 @@ public final class Rules {
     public Turn adjudicateStroke(Turn currentTurn, Ball ball, Hoop nextHoop, List<StrokeEvent<?>> events) {
         for (StrokeEvent<?> event : events) {
             if (event.type == RUN_HOOP && ball == event.ball && nextHoop == event.counterparty) {
-                return currentTurn;
+                return currentTurn.continuation();
             }
             
-            if (event.type == COLLISION) {
-                return currentTurn.roquet(event.ball);
+            if (event.type == COLLISION && (ball == event.ball || ball == event.counterparty)) {
+                return currentTurn.roquet((ball == event.ball) ? (Ball)event.counterparty : event.ball);
             }
         }
         

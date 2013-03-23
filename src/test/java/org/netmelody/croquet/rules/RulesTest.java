@@ -2,6 +2,7 @@ package org.netmelody.croquet.rules;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.netmelody.croquet.model.StrokeEvent.collision;
 import static org.netmelody.croquet.model.StrokeEvent.runHoop;
 
@@ -56,10 +57,20 @@ public final class RulesTest {
 
     @Test public void
     roquetingEarnsAnExtraStroke() {
-        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLUE, Ball.BLACK)));
+        final Turn updatedTurn1 = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLUE, Ball.BLACK)));
+        assertThat(updatedTurn1.roquetBall, is(Ball.BLUE));
+        assertThat(updatedTurn1.finished, is(false));
         
-        assertThat(updatedTurn.roquetBall, is(Ball.BLUE));
-        assertThat(updatedTurn.finished, is(false));
+        final Turn updatedTurn2 = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLACK, Ball.BLUE)));
+        assertThat(updatedTurn2.roquetBall, is(Ball.BLUE));
+        assertThat(updatedTurn2.finished, is(false));
+    }
+
+    @Test public void
+    collisionsOnlyCountAsRoquetIfTheyInvolveTheStrikersBall() {
+        final Turn updatedTurn1 = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLUE, Ball.RED)));
+        assertThat(updatedTurn1.roquetBall, is(nullValue()));
+        assertThat(updatedTurn1.finished, is(true));
     }
 
     private static List<StrokeEvent<?>> events(StrokeEvent<?>... events) {
