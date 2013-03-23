@@ -23,7 +23,7 @@ public final class Rules {
             }
         }
         
-        return currentTurn.finish();
+        return (currentTurn.roquetBall == null) ? currentTurn.finish() : currentTurn.continuation();
     }
 
 }

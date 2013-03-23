@@ -68,16 +68,24 @@ public final class RulesTest {
 
     @Test public void
     collisionsOnlyCountAsRoquetIfTheyInvolveTheStrikersBall() {
-        final Turn updatedTurn1 = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLUE, Ball.RED)));
-        assertThat(updatedTurn1.roquetBall, is(nullValue()));
-        assertThat(updatedTurn1.finished, is(true));
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLUE, Ball.RED)));
+        assertThat(updatedTurn.roquetBall, is(nullValue()));
+        assertThat(updatedTurn.finished, is(true));
     }
 
     @Test public void
     theFirstRoquetTakesPrecidence() {
-        final Turn updatedTurn1 = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLACK, Ball.BLUE),
-                                                                                              collision(Ball.BLACK, Ball.RED)));
-        assertThat(updatedTurn1.roquetBall, is(Ball.BLUE));
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLACK, Ball.BLUE),
+                                                                                             collision(Ball.BLACK, Ball.RED)));
+        assertThat(updatedTurn.roquetBall, is(Ball.BLUE));
+    }
+
+    @Test public void
+    takingCroquetEarnsAnExtraShot() {
+        final Turn roquet = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLACK, Ball.RED)));
+        final Turn updatedTurn = rules.adjudicateStroke(roquet, Ball.BLACK, targetHoop, events());
+        
+        assertThat(updatedTurn.finished, is(false));
     }
 
     private static List<StrokeEvent<?>> events(StrokeEvent<?>... events) {
