@@ -38,6 +38,14 @@ public final class RulesTest {
         assertThat(updatedTurn.finished(), is(false));
     }
 
+    @Test public void
+    runningAHoopWithABallOtherThanThatPlayedGarnersNoExtraStoke() {
+        final Hoop hoop = new Hoop(Position.at(1, 2));
+        final Turn updatedTurn = rules.adjudicateStroke(turn, Ball.BLACK, events(runHoop(Ball.BLUE, hoop)));
+        
+        assertThat(updatedTurn.finished(), is(true));
+    }
+
     private static List<StrokeEvent<?>> events(StrokeEvent<?>... events) {
         return new ArrayList<StrokeEvent<?>>(Arrays.asList(events));
     }

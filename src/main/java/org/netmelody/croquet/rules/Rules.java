@@ -11,7 +11,7 @@ public final class Rules {
 
     public Turn adjudicateStroke(Turn currentTurn, Ball ball, List<StrokeEvent<?>> events) {
         for (StrokeEvent<?> event : events) {
-            if (event.type == StrokeEventType.RUN_HOOP) {
+            if (event.type == StrokeEventType.RUN_HOOP && ball == event.ball) {
                 return currentTurn;
             }
         }
