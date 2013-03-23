@@ -3,6 +3,8 @@ package org.netmelody.croquet.model;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public final class GameTest {
@@ -17,4 +19,9 @@ public final class GameTest {
         assertThat(game.currentTeam(), sameInstance(team1));
     }
 
+    @Test public void
+    teamTwoGetsATurnNext() {
+        Game game2 = game.applyStroke(Ball.BLACK, new ArrayList<StrokeEvent>(), game.ballPositions);
+        assertThat(game2.currentTeam(), sameInstance(team2));
+    }
 }
