@@ -73,6 +73,13 @@ public final class RulesTest {
         assertThat(updatedTurn1.finished, is(true));
     }
 
+    @Test public void
+    theFirstRoquetTakesPrecidence() {
+        final Turn updatedTurn1 = rules.adjudicateStroke(turn, Ball.BLACK, targetHoop, events(collision(Ball.BLACK, Ball.BLUE),
+                                                                                              collision(Ball.BLACK, Ball.RED)));
+        assertThat(updatedTurn1.roquetBall, is(Ball.BLUE));
+    }
+
     private static List<StrokeEvent<?>> events(StrokeEvent<?>... events) {
         return new ArrayList<StrokeEvent<?>>(Arrays.asList(events));
     }
