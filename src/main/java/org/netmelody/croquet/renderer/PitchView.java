@@ -54,6 +54,16 @@ public final class PitchView extends JPanel {
     }
 
     private void drawPitch() {
+        graphics2d.setColor(Color.DARK_GRAY);
+        graphics2d.drawRect(scale(pitch.yardLineInset),
+                            scale(pitch.yardLineInset),
+                            scale(pitch.width  - 2.0f * pitch.yardLineInset),
+                            scale(pitch.height - 2.0f * pitch.yardLineInset));
+
+        graphics2d.setColor(Color.GRAY);
+        graphics2d.drawLine(scale(pitch.yardLineInset), scale(pitch.yardLineInset), scale(pitch.yardLineInset), panelHeight / 2);
+        graphics2d.drawLine(scale(pitch.width - pitch.yardLineInset), panelHeight / 2, scale(pitch.width - pitch.yardLineInset), panelHeight);
+        
         for (Hoop hoop : pitch.hoops) {
             drawCircle(hoop.leg1Position.x, hoop.leg1Position.y, hoop.legRadius, Color.WHITE);
             drawCircle(hoop.leg2Position.x, hoop.leg2Position.y, hoop.legRadius, Color.WHITE);

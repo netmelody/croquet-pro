@@ -13,6 +13,7 @@ public final class Pitch {
 
     public final float height = 4.0f * UNIT;
     public final float width  = 5.0f * UNIT;
+    public final float yardLineInset = UNIT / 7.0f;
     
     public final List<Hoop> hoops = unmodifiableList(asList(new Hoop(at(1.0f * UNIT, 1.0f * UNIT)),
                                                             new Hoop(at(4.0f * UNIT, 1.0f * UNIT)),

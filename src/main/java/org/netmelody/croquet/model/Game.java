@@ -20,12 +20,16 @@ public final class Game {
     public Game(Team team1, Team team2) {
         this(new Pitch(),
              new Rules(),
-             unmodifiableList(asList(team1, team2)),
-             unmodifiableList(asList(new BallInPlay(Ball.BLACK,  at(10.0f, 30.0f)),
-                                     new BallInPlay(Ball.YELLOW, at(10.0f, 32.5f)),
-                                     new BallInPlay(Ball.RED,    at(10.0f, 35.0f)),
-                                     new BallInPlay(Ball.BLUE,   at(10.0f, 37.5f)))),
-             new Turn(team1));
+             unmodifiableList(asList(team1, team2)));
+    }
+    
+    private Game(Pitch pitch, Rules rules, List<Team> teams) {
+        this(pitch, rules, teams,
+             unmodifiableList(asList(new BallInPlay(Ball.BLACK,  at(pitch.yardLineInset, 20.0f)),
+                                     new BallInPlay(Ball.YELLOW, at(pitch.yardLineInset, 22.5f)),
+                                     new BallInPlay(Ball.RED,    at(pitch.yardLineInset, 25.0f)),
+                                     new BallInPlay(Ball.BLUE,   at(pitch.yardLineInset, 27.5f)))),
+             new Turn(teams.get(0)));
     }
 
     private Game(Pitch pitch, Rules rules, List<Team> teams, List<BallInPlay> newPositions, Turn turn) {
