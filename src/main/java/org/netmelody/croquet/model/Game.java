@@ -6,10 +6,14 @@ import static java.util.Collections.unmodifiableList;
 
 import java.util.List;
 
+import org.netmelody.croquet.rules.Rules;
+
 
 public final class Game {
 
     public final Pitch pitch = new Pitch();
+    public final List<Team> teams = unmodifiableList(asList(new Team("1"), new Team("2")));
+    public final Rules rules = new Rules();
 
     public final List<BallInPlay> ballPositions = unmodifiableList(asList(
             new BallInPlay(Ball.BLACK,  at(10.0f, 30.0f)),
