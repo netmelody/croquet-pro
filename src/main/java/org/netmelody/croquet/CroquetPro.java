@@ -81,7 +81,7 @@ public final class CroquetPro {
                 goButton.setEnabled(false);
                 final Ball ball = ballChooser.getItemAt(ballChooser.getSelectedIndex());
                 final Double power = (Double)powerSpinner.getValue();
-                final float angle = (float)Math.toRadians((double)angleSpinner.getValue());
+                final float angle = (float)Math.toRadians((Double)angleSpinner.getValue());
                 makeShot(goButton, Stroke.standard(ball, new Strike(angle, power.floatValue())));
             }
         });
