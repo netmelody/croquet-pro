@@ -64,7 +64,7 @@ public final class CroquetPro {
         final Ball[] possibilities = {Ball.BLUE, Ball.BLACK, Ball.YELLOW, Ball.RED}; 
         final JSpinner angleSpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 360.0, 1.0));
         final JSpinner powerSpinner = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 20.0, 1.0));
-        final JComboBox<Ball> ballChooser = new JComboBox<>(possibilities);
+        final JComboBox<Ball> ballChooser = new JComboBox<Ball>(possibilities);
         final JButton goButton = new JButton("Go!");
         
         final JPanel panel = new JPanel();
