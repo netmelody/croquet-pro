@@ -18,6 +18,7 @@ import android.graphics.Color;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
+import android.os.SystemClock;
 
 public final class CourtRenderer implements Renderer {
 
@@ -30,6 +31,9 @@ public final class CourtRenderer implements Renderer {
 	private final List<Circle> fixedFeatures = new ArrayList<Circle>();
 
 	private List<BallInPlay> ballPositions = new ArrayList<BallInPlay>();
+
+	private volatile Transition currentTransition;
+	private volatile long transitionStart;
 	
 	public CourtRenderer(Pitch court) {
 		this.court = court;
@@ -73,6 +77,19 @@ public final class CourtRenderer implements Renderer {
 			iterator.next().draw(transformationMatrix);
 		}
 		
+		if (currentTransition != null) {
+			long frameTime = SystemClock.uptimeMillis() - this.transitionStart;
+			int frame = (int)(frameTime / (currentTransition.timeStep * 1000.0f));
+			
+			if (frame >= currentTransition.footage().size()) {
+				ballPositions = currentTransition.finalPositions();
+				currentTransition = null;
+			}
+			else {
+				ballPositions = currentTransition.footage().get(frame);
+			}
+		}
+		
 		for (Iterator<BallInPlay> iterator = ballPositions.iterator(); iterator.hasNext();) {
 			final BallInPlay ballInPlay = iterator.next();
 			scaledCircle(ballInPlay.position.x, ballInPlay.position.y, ballInPlay.ball.radius, parseColor(ballInPlay.ball.hexColor)).draw(transformationMatrix);
@@ -83,8 +100,13 @@ public final class CourtRenderer implements Renderer {
 		this.ballPositions = ballPositions;
 	}
 
-	public void playStroke(Transition transition) {
-		this.ballPositions = transition.finalPositions();
+	public boolean playStroke(Transition transition) {
+		if (currentTransition != null) {
+			return false;
+		}
+		this.currentTransition = transition;
+		this.transitionStart = SystemClock.uptimeMillis();
+		return true;
 	}
 
 }

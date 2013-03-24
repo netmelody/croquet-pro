@@ -36,10 +36,11 @@ public final class CourtView extends GLSurfaceView {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		final Transition transition = enactor.makeStroke(ballPositions, Stroke.standard(Ball.BLACK, new Strike(0.05f, 2f)));
-		renderer.playStroke(transition);
-		ballPositions = transition.finalPositions();
-		requestRender();
+		final Transition transition = enactor.makeStroke(ballPositions, Stroke.standard(Ball.BLACK, new Strike(0.05f, 10f)));
+		if (renderer.playStroke(transition)) {
+		    ballPositions = transition.finalPositions();
+		}
+		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 		return true;
 	}
 }
