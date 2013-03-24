@@ -23,11 +23,22 @@ public final class CourtView extends GLSurfaceView {
     private final StrokeEnactor enactor = new StrokeEnactor(game.pitch);
     
     private List<BallInPlay> ballPositions = game.ballPositions;
+	private volatile boolean animating = false;
 	
+    public interface TransitionCompletionHandler {
+    	void completed(Transition t);
+    }
+    
 	public CourtView(Context context) {
 		super(context);
 		setEGLContextClientVersion(2);
-		renderer = new CourtRenderer(game.pitch);
+		renderer = new CourtRenderer(game.pitch, new TransitionCompletionHandler() {
+			@Override
+			public void completed(Transition t) {
+				animating = false;
+				setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+			}
+		});
         setRenderer(renderer);
         
         renderer.setBallPositions(game.ballPositions);
@@ -36,11 +47,13 @@ public final class CourtView extends GLSurfaceView {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		final Transition transition = enactor.makeStroke(ballPositions, Stroke.standard(Ball.BLACK, new Strike(0.05f, 10f)));
-		if (renderer.playStroke(transition)) {
-		    ballPositions = transition.finalPositions();
+		if (!animating) {
+		    final Transition transition = enactor.makeStroke(ballPositions, Stroke.standard(Ball.BLACK, new Strike(0.05f, 10f)));
+		    renderer.playStroke(transition);
+			setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+			ballPositions = transition.finalPositions();
+			animating = true;
 		}
-		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 		return true;
 	}
 }

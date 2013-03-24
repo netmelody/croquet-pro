@@ -9,6 +9,7 @@ import java.util.List;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import org.netmelody.croquet.android.CourtView.TransitionCompletionHandler;
 import org.netmelody.croquet.model.BallInPlay;
 import org.netmelody.croquet.model.Hoop;
 import org.netmelody.croquet.model.Pitch;
@@ -34,9 +35,12 @@ public final class CourtRenderer implements Renderer {
 
 	private volatile Transition currentTransition;
 	private volatile long transitionStart;
+
+	private final TransitionCompletionHandler transitionCompletionHandler;
 	
-	public CourtRenderer(Pitch court) {
+	public CourtRenderer(Pitch court, TransitionCompletionHandler transitionCompletionHandler) {
 		this.court = court;
+		this.transitionCompletionHandler = transitionCompletionHandler;
 	}
 
 	@Override
@@ -77,16 +81,18 @@ public final class CourtRenderer implements Renderer {
 			iterator.next().draw(transformationMatrix);
 		}
 		
-		if (currentTransition != null) {
+		final Transition transition = currentTransition;
+		if (transition != null) {
 			long frameTime = SystemClock.uptimeMillis() - this.transitionStart;
-			int frame = (int)(frameTime / (currentTransition.timeStep * 1000.0f));
+			int frame = (int)(frameTime / (transition.timeStep * 1000.0f));
 			
-			if (frame >= currentTransition.footage().size()) {
-				ballPositions = currentTransition.finalPositions();
+			if (frame >= transition.footage().size()) {
+				ballPositions = transition.finalPositions();
+				transitionCompletionHandler.completed(transition);
 				currentTransition = null;
 			}
 			else {
-				ballPositions = currentTransition.footage().get(frame);
+				ballPositions = transition.footage().get(frame);
 			}
 		}
 		
@@ -100,13 +106,12 @@ public final class CourtRenderer implements Renderer {
 		this.ballPositions = ballPositions;
 	}
 
-	public boolean playStroke(Transition transition) {
+	public void playStroke(Transition transition) {
 		if (currentTransition != null) {
-			return false;
+			return;
 		}
 		this.currentTransition = transition;
 		this.transitionStart = SystemClock.uptimeMillis();
-		return true;
 	}
 
 }
