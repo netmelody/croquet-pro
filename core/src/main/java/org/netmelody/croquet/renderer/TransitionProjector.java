@@ -26,8 +26,8 @@ public final class TransitionProjector {
         project(transition.timeStep, transition.footage());
     }
 
-    private void project(float timeStep, List<List<BallInPlay>> footage) {
-        final long cellsPerNano = (long)(NANOS_PER_SECOND * timeStep);
+    private void project(float timeStepSeconds, List<List<BallInPlay>> footage) {
+        final long cellsPerNano = (long)(NANOS_PER_SECOND * timeStepSeconds);
         final long runStartTime = System.nanoTime();
         
         long frameStartTime = runStartTime;

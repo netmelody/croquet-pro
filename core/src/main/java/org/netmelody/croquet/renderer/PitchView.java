@@ -15,14 +15,14 @@ import javax.swing.JPanel;
 import org.netmelody.croquet.model.Ball;
 import org.netmelody.croquet.model.BallInPlay;
 import org.netmelody.croquet.model.Hoop;
-import org.netmelody.croquet.model.Pitch;
+import org.netmelody.croquet.model.Court;
 import org.netmelody.croquet.model.Position;
 
 public final class PitchView extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private final Pitch pitch;
+    private final Court pitch;
     private final int panelWidth;
     private final int panelHeight;
 
@@ -33,7 +33,7 @@ public final class PitchView extends JPanel {
         return (int)(value * 14.0f);
     }
 
-    public PitchView(Pitch pitch) {
+    public PitchView(Court pitch) {
         this.pitch = pitch;
         panelWidth = scale(pitch.width);
         panelHeight = scale(pitch.height);

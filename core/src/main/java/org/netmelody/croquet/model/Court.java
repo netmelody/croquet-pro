@@ -6,7 +6,7 @@ import static java.util.Collections.unmodifiableList;
 
 import java.util.List;
 
-public final class Pitch {
+public final class Court {
 
 //    private static final float UNIT = 6.4008f;
     private static final float UNIT = 20.0f;

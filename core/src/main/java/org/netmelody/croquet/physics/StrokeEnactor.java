@@ -25,7 +25,7 @@ import org.netmelody.croquet.model.Ball;
 import org.netmelody.croquet.model.BallInPlay;
 import org.netmelody.croquet.model.Hoop;
 import org.netmelody.croquet.model.Peg;
-import org.netmelody.croquet.model.Pitch;
+import org.netmelody.croquet.model.Court;
 import org.netmelody.croquet.model.Stroke;
 
 public final class StrokeEnactor {
@@ -38,7 +38,7 @@ public final class StrokeEnactor {
 
     private final World world = new World(new Vec2(0.0f, 0.0f), true);
 
-    public StrokeEnactor(Pitch pitch) {
+    public StrokeEnactor(Court pitch) {
         world.setContactListener(new CustomContactListener());
         for (Hoop hoop : pitch.hoops) {
             createHoop(hoop);

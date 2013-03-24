@@ -11,29 +11,29 @@ import org.netmelody.croquet.rules.Rules;
 
 public final class Game {
 
-    public final Pitch pitch;
+    public final Court court;
     public final Rules rules;
     public final List<Team> teams;
     public final Turn currentTurn;
     public final List<BallInPlay> ballPositions;
 
     public Game(Team team1, Team team2) {
-        this(new Pitch(),
+        this(new Court(),
              new Rules(),
              unmodifiableList(asList(team1, team2)));
     }
 
-    private Game(Pitch pitch, Rules rules, List<Team> teams) {
-        this(pitch, rules, teams,
-             unmodifiableList(asList(new BallInPlay(Ball.BLACK,  at(pitch.yardLineInset, 20.0f)),
-                                     new BallInPlay(Ball.YELLOW, at(pitch.yardLineInset, 22.5f)),
-                                     new BallInPlay(Ball.RED,    at(pitch.yardLineInset, 25.0f)),
-                                     new BallInPlay(Ball.BLUE,   at(pitch.yardLineInset, 27.5f)))),
+    private Game(Court court, Rules rules, List<Team> teams) {
+        this(court, rules, teams,
+             unmodifiableList(asList(new BallInPlay(Ball.BLACK,  at(court.yardLineInset, 20.0f)),
+                                     new BallInPlay(Ball.YELLOW, at(court.yardLineInset, 22.5f)),
+                                     new BallInPlay(Ball.RED,    at(court.yardLineInset, 25.0f)),
+                                     new BallInPlay(Ball.BLUE,   at(court.yardLineInset, 27.5f)))),
              new Turn(teams.get(0)));
     }
 
-    private Game(Pitch pitch, Rules rules, List<Team> teams, List<BallInPlay> newPositions, Turn turn) {
-        this.pitch = pitch;
+    private Game(Court pitch, Rules rules, List<Team> teams, List<BallInPlay> newPositions, Turn turn) {
+        this.court = pitch;
         this.rules = rules;
         this.teams = teams;
         this.ballPositions = newPositions;
@@ -55,7 +55,7 @@ public final class Game {
     }
 
     public Game applyStroke(Ball ball, List<StrokeEvent<?>> events, List<BallInPlay> newPositions) {
-        final Turn progressedTurn = rules.adjudicateStroke(currentTurn, ball, pitch.hoops.get(0), events);
-        return new Game(pitch, rules, teams, newPositions, progressedTurn);
+        final Turn progressedTurn = rules.adjudicateStroke(currentTurn, ball, court.hoops.get(0), events);
+        return new Game(court, rules, teams, newPositions, progressedTurn);
     }
 }
