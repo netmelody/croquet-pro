@@ -8,10 +8,11 @@ import android.opengl.GLES20;
 
 public final class Circle {
 
+	private static final int POINTS_IN_CIRCLE = 13;
+
 	private static final int BYTES_PER_FLOAT = 4;
 	private static final int COORDS_PER_VERTEX = 3;
-	private static final int POINTS_IN_CIRCLE = 13;
-	private static final int VERTEX_COUNT = POINTS_IN_CIRCLE + 1;
+	private static final int VERTEX_COUNT = POINTS_IN_CIRCLE + 2;
 	
     private static final String VERTEX_SHADER =
         "uniform mat4 matrix;" +
@@ -64,24 +65,30 @@ public final class Circle {
 		GLES20.glUniformMatrix4fv(matrixHandle, 1, false, transformationMatrix, 0);
 		
 		GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, VERTEX_COUNT);
-//		GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 1);
-		
 		GLES20.glDisableVertexAttribArray(positionHandle);
 	}
 	
 	/**
-	 * first coordinate is centre of circle, followed by N points on circumference.
+	 * First coordinate is centre of circle, followed by N points on circumference,
+	 * followed by a repetition of the first point.
 	 */
 	private static float[] calculateCircleCoords(float centreX, float centreY, float radius) {
 		final float coords[] = new float[VERTEX_COUNT * COORDS_PER_VERTEX];
 		final float inc = (float)(Math.PI * 2.0f / POINTS_IN_CIRCLE);
 		
 		coords[0] = centreX; coords[1] = centreY; coords[2] = 0.0f;
-        for (int i = 1; i < POINTS_IN_CIRCLE; i += COORDS_PER_VERTEX) {
-        	coords[i + 0] = (float)(centreX + Math.cos(i * inc) * radius);
-        	coords[i + 1] = (float)(centreY + Math.sin(i * inc) * radius);
-        	coords[i + 2] = 0.0f;
+		int offset = 0;
+        for (int i = 1; i <= POINTS_IN_CIRCLE; i++) {
+        	offset = i * COORDS_PER_VERTEX;
+        	coords[offset + 0] = (float)(centreX + Math.cos(i * inc) * radius);
+        	coords[offset + 1] = (float)(centreY + Math.sin(i * inc) * radius);
+        	coords[offset + 2] = 0.0f;
         }
+        
+        coords[offset + 3] = coords[3];
+        coords[offset + 4] = coords[4];
+        coords[offset + 5] = coords[5];
+
         return coords;
 	}
 	
