@@ -13,13 +13,17 @@ public final class CourtRenderer implements Renderer {
 	private final float[] viewMatrix = new float[16];
 	
 	private final float[] transformationMatrix = new float[16];
-	private Circle content;
+	private Circle[] content = new Circle[]{};
 	
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		
-		content = new Circle();
+		content = new Circle[] {
+			new Circle(0.0f, 0.0f, 0.03f),
+			new Circle(0.4f, 0.0f, 0.03f),
+			new Circle(-0.4f, 0.0f, 0.03f)
+		};
 	}
 
 	@Override
@@ -35,7 +39,9 @@ public final class CourtRenderer implements Renderer {
 		Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		Matrix.multiplyMM(transformationMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 		
-		content.draw(transformationMatrix);
+		for (int i = 0; i < content.length; i++) {
+			content[i].draw(transformationMatrix);
+		}
 	}
 
 }

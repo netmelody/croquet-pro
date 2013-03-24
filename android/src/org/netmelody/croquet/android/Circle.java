@@ -32,8 +32,8 @@ public final class Circle {
 	private final FloatBuffer vertexBuffer;
 	private final int graphicsProgram;
 	
-	public Circle() {
-		final float coords[] = calculateCircleCoords(0.0f, 0.0f, 0.6f);
+	public Circle(float x, float y, float radius) {
+		final float coords[] = calculateCircleCoords(x, y, radius);
         
 		final ByteBuffer bb = ByteBuffer.allocateDirect(coords.length * BYTES_PER_FLOAT);
         bb.order(ByteOrder.nativeOrder());
