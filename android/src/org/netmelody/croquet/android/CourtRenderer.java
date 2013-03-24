@@ -1,5 +1,7 @@
 package org.netmelody.croquet.android;
 
+import static android.graphics.Color.parseColor;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.netmelody.croquet.model.Hoop;
 import org.netmelody.croquet.model.Pitch;
 import org.netmelody.croquet.physics.Transition;
 
+import android.graphics.Color;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.Matrix;
@@ -38,15 +41,15 @@ public final class CourtRenderer implements Renderer {
 		
 		for (Iterator<Hoop> iterator = court.hoops.iterator(); iterator.hasNext();) {
 			final Hoop hoop = iterator.next();
-	    	fixedFeatures.add(scaledCircle(hoop.leg1Position.x, hoop.leg1Position.y, hoop.legRadius));
-	    	fixedFeatures.add(scaledCircle(hoop.leg2Position.x, hoop.leg2Position.y, hoop.legRadius));
+	    	fixedFeatures.add(scaledCircle(hoop.leg1Position.x, hoop.leg1Position.y, hoop.legRadius, Color.WHITE));
+	    	fixedFeatures.add(scaledCircle(hoop.leg2Position.x, hoop.leg2Position.y, hoop.legRadius, Color.WHITE));
 		}
-		fixedFeatures.add(scaledCircle(court.peg.position.x, court.peg.position.y, court.peg.radius));
+		fixedFeatures.add(scaledCircle(court.peg.position.x, court.peg.position.y, court.peg.radius, Color.WHITE));
 	}
 
-	private final Circle scaledCircle(float x, float y, float radius) {
+	private final Circle scaledCircle(float x, float y, float radius, int colour) {
 		float scale = 30.0f;
-		return new Circle((x - court.peg.position.x) / scale, (y - court.peg.position.y) / scale, radius / scale);
+		return new Circle((x - court.peg.position.x) / scale, (y - court.peg.position.y) / scale, radius / scale, colour);
 	}
 	
 	@Override
@@ -72,7 +75,7 @@ public final class CourtRenderer implements Renderer {
 		
 		for (Iterator<BallInPlay> iterator = ballPositions.iterator(); iterator.hasNext();) {
 			final BallInPlay ballInPlay = iterator.next();
-			scaledCircle(ballInPlay.position.x, ballInPlay.position.y, ballInPlay.ball.radius).draw(transformationMatrix);
+			scaledCircle(ballInPlay.position.x, ballInPlay.position.y, ballInPlay.ball.radius, parseColor(ballInPlay.ball.hexColor)).draw(transformationMatrix);
 		}
 	}
 

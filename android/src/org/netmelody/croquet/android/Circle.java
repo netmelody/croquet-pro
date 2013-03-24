@@ -32,7 +32,10 @@ public final class Circle {
 	private final FloatBuffer vertexBuffer;
 	private final int graphicsProgram;
 	
-	public Circle(float x, float y, float radius) {
+	public Circle(float x, float y, float radius, int colour) {
+		color[0] = ((colour >> 16) & 0xFF) / 255f;
+		color[1] = ((colour >> 8) & 0xFF) / 255f;
+		color[2] = (colour & 0xFF) / 255f;
 		final float coords[] = calculateCircleCoords(x, y, radius);
         
 		final ByteBuffer bb = ByteBuffer.allocateDirect(coords.length * BYTES_PER_FLOAT);
