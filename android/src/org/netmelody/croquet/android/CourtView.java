@@ -45,11 +45,25 @@ public final class CourtView extends GLSurfaceView {
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 	}
 
+	private float x = 0f;
+	private float y = 0f;
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (!animating) {
-		    final Transition transition = enactor.makeStroke(ballPositions, Stroke.standard(Ball.BLACK, new Strike(0.05f, 10f)));
-		    renderer.playStroke(transition);
+		if (animating) {
+			return true;
+		}
+		if (event.getActionMasked() == MotionEvent.ACTION_DOWN && event.getActionIndex() == 0) {
+			x = event.getX();
+			y = event.getY();
+		}
+		if (event.getActionMasked() == MotionEvent.ACTION_UP && event.getActionIndex() == 0) {
+			float dx = event.getX() - x;
+			float dy = event.getY() - y;
+			
+			System.out.println(event.getX() + " " + event.getY());
+			final Transition transition = enactor.makeStroke(ballPositions, Stroke.standard(Ball.BLACK, new Strike(0.05f, 10f)));
+			renderer.playStroke(transition);
 			setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 			ballPositions = transition.finalPositions();
 			animating = true;
