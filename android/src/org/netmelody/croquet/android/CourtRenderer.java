@@ -63,11 +63,8 @@ public final class CourtRenderer implements Renderer {
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		GLES20.glViewport(0, 0, width, height);
 		float ratio = (float) width / height;
-		
 		float zoom = 0.1f;
-//		Matrix.frustumM(projectionMatrix, 0, -ratio/zoom, ratio/zoom, -1/zoom, 1/zoom, 1, 25);
 		Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, zoom, 25);
-//		Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, zoom, 25*zoom);
 	}
 
 	@Override
