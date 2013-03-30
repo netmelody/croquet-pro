@@ -49,22 +49,25 @@ public final class CourtRenderer implements Renderer {
 		
 		for (Iterator<Hoop> iterator = court.hoops.iterator(); iterator.hasNext();) {
 			final Hoop hoop = iterator.next();
-	    	fixedFeatures.add(scaledCircle(hoop.leg1Position.x, hoop.leg1Position.y, hoop.legRadius, Color.WHITE));
-	    	fixedFeatures.add(scaledCircle(hoop.leg2Position.x, hoop.leg2Position.y, hoop.legRadius, Color.WHITE));
+	    	fixedFeatures.add(circle(hoop.leg1Position.x, hoop.leg1Position.y, hoop.legRadius, Color.WHITE));
+	    	fixedFeatures.add(circle(hoop.leg2Position.x, hoop.leg2Position.y, hoop.legRadius, Color.WHITE));
 		}
-		fixedFeatures.add(scaledCircle(court.peg.position.x, court.peg.position.y, court.peg.radius, Color.WHITE));
+		fixedFeatures.add(circle(court.peg.position.x, court.peg.position.y, court.peg.radius, Color.WHITE));
 	}
 
-	private final Circle scaledCircle(float x, float y, float radius, int colour) {
-		float scale = 30.0f;
-		return new Circle((x - court.peg.position.x) / scale, (y - court.peg.position.y) / scale, radius / scale, colour);
+	private final Circle circle(float x, float y, float radius, int colour) {
+		return new Circle(x - court.peg.position.x, y - court.peg.position.y, radius, colour);
 	}
 	
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		GLES20.glViewport(0, 0, width, height);
 		float ratio = (float) width / height;
-		Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+		
+		float zoom = 0.1f;
+//		Matrix.frustumM(projectionMatrix, 0, -ratio/zoom, ratio/zoom, -1/zoom, 1/zoom, 1, 25);
+		Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, zoom, 25);
+//		Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, zoom, 25*zoom);
 	}
 
 	@Override
@@ -98,7 +101,7 @@ public final class CourtRenderer implements Renderer {
 		
 		for (Iterator<BallInPlay> iterator = ballPositions.iterator(); iterator.hasNext();) {
 			final BallInPlay ballInPlay = iterator.next();
-			scaledCircle(ballInPlay.position.x, ballInPlay.position.y, ballInPlay.ball.radius, parseColor(ballInPlay.ball.hexColor)).draw(transformationMatrix);
+			circle(ballInPlay.position.x, ballInPlay.position.y, ballInPlay.ball.radius, parseColor(ballInPlay.ball.hexColor)).draw(transformationMatrix);
 		}
 	}
 
